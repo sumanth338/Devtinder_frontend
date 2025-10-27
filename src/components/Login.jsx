@@ -1,9 +1,25 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 const Login = () => {
 
-  const [emailId, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [emailId, setEmail] = useState("sumanth@gmail.com")
+  const [password, setPassword] = useState("Sumanth@123")
+  
+  const handleLogin = async () => {
+    try{
+      const res = await axios.post("http://localhost:3000/login", {
+        email: emailId, password  
+      },{
+        withCredentials:true
+      })
+      console.log(res.data)
+      // TODO: Handle successful login (store token, redirect, etc.)
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-start justify-center bg-base-200 pt-20">
@@ -38,7 +54,7 @@ const Login = () => {
           </div>
           
           <div className="card-actions justify-center">
-            <button className="btn btn-primary w-full">Login</button>
+            <button className="btn btn-primary w-full" onClick = {handleLogin}>Login</button>
           </div>
         </div>
       </div>
