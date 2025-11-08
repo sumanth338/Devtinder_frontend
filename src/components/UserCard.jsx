@@ -2,18 +2,20 @@ import React from 'react'
 
 const UserCard = ({user}) => {
     console.log(user)
-    const {firstName, lastName, email, photoUrl, about, skills, gender} = user;
+    const {firstName, lastName, email, photoUrl, about, skills, gender, age} = user;
     
   return (
     <div className="card bg-base-300 w-70 shadow-xl">
       <figure>
         <img
-          src={photoUrl}
-          alt={`${firstName} ${lastName}`} />
+          src={photoUrl} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{firstName} {lastName}</h2>
         <p className="text-sm text-gray-600">{email}</p>
+        {age && (
+          <p className="text-sm text-gray-500">Age: {age}</p>
+        )}
         {about && (
           <p className="text-sm">{about}</p>
         )}
