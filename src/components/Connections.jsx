@@ -20,7 +20,7 @@ const Connections = () => {
         }
         fetchConnections()
     },[dispatch])
-    if (connections.length === 0) return <h1>No connection found</h1>
+    // if (connections.length === 0) return <h1>No connection found</h1>
 
   return (
     <div className="min-h-screen py-8 px-4">
@@ -29,21 +29,21 @@ const Connections = () => {
         {connections.map((connection) => {
           return (
             <div 
-              key={connection.toUserId._id}
+              key={connection._id}
               className="card w-80 bg-base-100 shadow-xl"
             >
               <figure className="px-6 pt-6">
                 <img 
-                  src={connection.toUserId.photoUrl || 'https://via.placeholder.com/200'} 
+                  src={connection.photoUrl} 
                   className="rounded-full w-32 h-32 object-cover"
                 />
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title">
-                  {connection.toUserId.firstName} {connection.toUserId.lastName}
+                  {connection.firstName} {connection.lastName}
                 </h2>
                 <p className="text-sm text-gray-600">
-                  {connection.toUserId.about || 'No description available'}
+                  {connection.about || 'No description available'}
                 </p>
               </div>
             </div>
