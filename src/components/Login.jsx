@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
@@ -64,6 +64,10 @@ const Login = () => {
           {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
           <div className="card-actions justify-center">
             <button className="btn btn-primary w-full" onClick = {handleLogin}>Login</button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            <span className="text-gray-600">New user? </span>
+            <Link to="/signup" className="link link-primary">Create an account</Link>
           </div>
         </div>
       </div>

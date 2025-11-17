@@ -1,13 +1,47 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { removeUserFromFeed } from '../utils/feedSlice';
 
 const UserCard = ({user}) => {
+  const navigate = useNavigate();
+  const [toastMessage, setToastMessage] = useState('');
+  const dispatch = useDispatch();
+
   if (!user) {
     return <div>No user present</div>
   }
   console.log(user)
-  const {firstName, lastName, email, photoUrl, about, skills, gender, age} = user;
+  const {_id,firstName, lastName, email, photoUrl, about, skills, gender, age} = user;
+
+  const handleRequest = async (status, userId)=>{
+    try{
+      await axios.post('http://localhost:3000/request/send/'+ status +'/' +userId,{},{withCredentials:true})
+      dispatch(removeUserFromFeed(userId))
+      if (status === 'interested') {
+        setToastMessage('Request sent successfully');
+      } else if (status === 'ignored') {
+        setToastMessage('Request ignored');
+      }
+      setTimeout(() => {
+        navigate(0); // refresh the current page after showing toast briefly
+      }, 1000);
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
     
   return (
+    <>
+    {toastMessage && (
+      <div className="toast toast-top toast-end">
+        <div className="alert alert-info">
+          <span>{toastMessage}</span>
+        </div>
+      </div>
+    )}
     <div className="card bg-base-300 w-70 shadow-xl">
       <figure>
         <img
@@ -35,11 +69,12 @@ const UserCard = ({user}) => {
           </div>
         )}
         <div className="card-actions justify-center mt-4 gap-4">
-          <button className="btn btn-error text-white">Ignored</button>
-          <button className="btn btn-primary text-white">Interested</button>
+          <button className="btn btn-error text-white" onClick={()=>{handleRequest("ignored",_id)}}>Ignored</button>
+          <button className="btn btn-primary text-white" onClick={()=>{handleRequest("interested",_id)}}>Interested</button>
         </div>
       </div>
     </div>
+    </>
   )
 }
 

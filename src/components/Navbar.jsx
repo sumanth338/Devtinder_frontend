@@ -24,7 +24,6 @@ const Navbar = () => {
     <Link to="/" className="btn btn-ghost text-xl">🧑‍💻 Devtinder</Link>
   </div>
   <div className="flex gap-2 items-center">
-    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
     {user && <p className="mx-2">Welcome,{user.firstName}</p>}
     <div className="dropdown dropdown-end mx-5">
     {user && (
